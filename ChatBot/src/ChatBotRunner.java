@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 /**
  * A simple class to run our chatbot teams.
- * @author Mr. Levin
+ * @author Simon Huang, Nicholas Huynh, Kewu Sze
  * @version September 2017
  */
 public class ChatBotRunner
@@ -13,7 +13,7 @@ public class ChatBotRunner
 	 */
 	public static void main(String[] args)
 	{
-		ChatBotLevin chatbot1 = new ChatBotLevin();
+		ChatBotHuang chatbot1 = new ChatBotHuang();
 		
 		System.out.println (chatbot1.getGreeting());
 		Scanner in = new Scanner (System.in);
