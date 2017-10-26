@@ -5,10 +5,11 @@
  * This version:
  * @author Simon Huang
  * @version September 2017
+ * Topic: Good Relationship Advice
  */
 public class ChatBotHuang
 {
-	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+	//as user's emotion goes down, bot becomes more uplifting.
 	int emotion = 0;
 	/**
 	 * Get a default greeting 	
@@ -16,7 +17,7 @@ public class ChatBotHuang
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "How long has this relationship been going?";
 	}
 	
 	/**
@@ -32,13 +33,13 @@ public class ChatBotHuang
 		
 		if (statement.length() == 0)
 		{
-			response = "Say something, please.";
+			response = "It is ok if you don't want to tell me.";
 		}
 
-		else if (findKeyword(statement, "no") >= 0)
+		else if (findKeyword(statement, "years") >= 0)
 		{
-			response = "Why so negative?";
-                	emotion--;
+			response = "Wow that is a long time! Congratulations!";
+                	emotion++;
 		}
 		
 		else if (findKeyword(statement, "levin") >= 0)
@@ -48,9 +49,13 @@ public class ChatBotHuang
 		}
 
 		// Response transforming I want to statement
-		else if (findKeyword(statement, "I want to", 0) >= 0)
+		else if (findKeyword(statement, "thank you", 0) >= 0)
 		{
-			response = transformIWantToStatement(statement);
+			response = transformThankYouStatement(statement);
+		}
+		else if (findKeyword(statement, "dont want to", 0) >= 0)
+		{
+			response = transformDontWantToStatement(statement);
 		}
 		else if (findKeyword(statement, "I want",0) >= 0)
 		{
@@ -70,7 +75,7 @@ public class ChatBotHuang
 	 * @param statement the user statement, assumed to contain "I want to"
 	 * @return the transformed statement
 	 */
-	private String transformIWantToStatement(String statement)
+	private String transformThankYouStatement(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -81,9 +86,25 @@ public class ChatBotHuang
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		int psn = findKeyword (statement, "I want to", 0);
-		String restOfStatement = statement.substring(psn + 9).trim();
-		return "Why do you want to " + restOfStatement + "?";
+		//int psn = findKeyword (statement, "thank you", 0);
+		//String restOfStatement = statement.substring(psn+9).trim();
+		return "You are very welcome :) ";
+	}
+
+	private String transformDontWantToStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "dont want to", 0);
+		String restOfStatement = statement.substring(psn+9).trim();
+		return "Why dont you want to " + restOfStatement + "?";
 	}
 
 	
