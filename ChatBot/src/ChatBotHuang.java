@@ -17,7 +17,7 @@ public class ChatBotHuang
 	 */	
 	public String getGreeting()
 	{
-		return "How long has this relationship been going?";
+		return "Hi, my name is Simon! I give positive relationship advice. What is your name?";
 	}
 	
 	/**
@@ -33,12 +33,12 @@ public class ChatBotHuang
 		
 		if (statement.length() == 0)
 		{
-			response = "It is ok if you don't want to tell me.";
+			response = "It is ok if you don't want to tell me. \nLet's begin with \"How long has this relationship been going?\"";
 		}
 
 		else if (findKeyword(statement, "years") >= 0)
-		{
-			response = "Wow that is a long time! Congratulations!";
+		{ 
+			response = "Wow that is a long time! Congratulations! \nSo what problems are you having with your partner?";
                 	emotion++;
 		}
 		
@@ -130,6 +130,10 @@ public class ChatBotHuang
 		return "Would you really be happy if you had " + restOfStatement + "?";
 	}
 	
+	private String name(String statement) 
+	{
+		//storing the name
+	}
 	
 	/**
 	 * Take a statement with "I <something> you" and transform it into 
