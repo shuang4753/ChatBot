@@ -16,7 +16,7 @@ public class ChatBotHuynh
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "So you came here to talk about your parter cheating on you?";
 	}
 	
 	/**
@@ -32,7 +32,7 @@ public class ChatBotHuynh
 		
 		if (statement.length() == 0)
 		{
-			response = "Say something, please.";
+			response = "Baby come back to me";
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
@@ -41,9 +41,9 @@ public class ChatBotHuynh
                 	emotion--;
 		}
 		
-		else if (findKeyword(statement, "levin") >= 0)
+		else if (findKeyword(statement, "Cheat") >= 0)
 		{
-			response = "More like LevinTheDream amiright?";
+			response = "Are you positive they did?";
 			emotion++;
 		}
 
@@ -243,7 +243,7 @@ public class ChatBotHuynh
 			"So, would you like to go for a walk?",
 			"Could you say that again?"
 	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomAngryResponses = {">:(", "OMG", "The rage consumes me!"};
+	private String [] randomHappyResponses = {"Awww, thats amazing", "Today is a good day", "You make me feel like a brand new pair of shoes."};
 	
 }

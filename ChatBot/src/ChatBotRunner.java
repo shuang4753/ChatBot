@@ -14,7 +14,7 @@ public class ChatBotRunner
 	 */
 	public static void main(String[] args)
 	{
-		ChatBotHuang chatbot1 = new ChatBotHuang();
+		ChatBotHuynh chatbot1 = new ChatBotHuynh();
 		
 		System.out.println (chatbot1.getGreeting());
 		Scanner in = new Scanner (System.in);
