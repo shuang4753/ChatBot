@@ -1,4 +1,5 @@
  import java.util.Random;
+ import java.util.Scanner;
 
 /**
  * A program to carry on conversations with a human user.
@@ -9,6 +10,7 @@
  */
 public class ChatBotHuang
 {
+	public String name;
 	//as user's emotion goes down, bot becomes more uplifting.
 	int emotion = 0;
 	/**
@@ -17,7 +19,12 @@ public class ChatBotHuang
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, my name is Simon! I give positive relationship advice. What is your name?";
+		String greeting= "Hi, my name is Simon! I give positive relationship advice. What is your name?";
+		System.out.println(greeting);
+		Scanner Username = new Scanner (System.in);
+		name= Username.nextLine();
+		String hiUser = "Hi " + name + " \nWhat would you like to talk about?";
+		return hiUser;
 	}
 	
 	/**
@@ -33,33 +40,41 @@ public class ChatBotHuang
 		
 		if (statement.length() == 0)
 		{
-			response = "It is ok if you don't want to tell me. \nLet's begin with \"How long has this relationship been going?\"";
+			response = "How long has this relationship been going?";
 		}
-
+		else if (findKeyword(statement, "aware") >= 0)
+		{
+			response = "When I mean aware, I mean you must realize how your actions affect the other person.";
+		}
+		else if (findKeyword(statement, "I understand") >= 0) 
+		{
+			response = "Good Job Buddy!";
+			emotion++;
+		}
 		else if (findKeyword(statement, "years") >= 0)
 		{ 
-			response = "Wow that is a long time! Congratulations! \nSo what problems are you having with your partner?";
+			response = "Wow that is a long time!\nSo what problems are you having in this relationship?";
                 	emotion++;
 		}
 		
-		else if (findKeyword(statement, "levin") >= 0)
+		
+		// Response transforming I want to statement
+		else if (findKeyword(statement, "keep") >= 0)
 		{
-			response = "More like LevinTheDream amiright?";
+			response = transformKeepStatement(statement);
 			emotion++;
 		}
-
-		// Response transforming I want to statement
 		else if (findKeyword(statement, "thank you", 0) >= 0)
 		{
-			response = transformThankYouStatement(statement);
+			
 		}
 		else if (findKeyword(statement, "dont want to", 0) >= 0)
 		{
 			response = transformDontWantToStatement(statement);
 		}
-		else if (findKeyword(statement, "I want",0) >= 0)
+		else if (findKeyword(statement, "is really",0) >= 0)
 		{
-			response = transformIWantStatement(statement);
+			response = transformIsReallyStatement(statement);
 		}	
 		else
 		{
@@ -75,7 +90,7 @@ public class ChatBotHuang
 	 * @param statement the user statement, assumed to contain "I want to"
 	 * @return the transformed statement
 	 */
-	private String transformThankYouStatement(String statement)
+	private String transformIsReallyStatement(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -86,9 +101,17 @@ public class ChatBotHuang
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		//int psn = findKeyword (statement, "thank you", 0);
-		//String restOfStatement = statement.substring(psn+9).trim();
-		return "You are very welcome :) ";
+		
+		if (lastChar.equals("?"))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		
+		
+		int psn = findKeyword (statement, "is really", 0);
+		String restOfStatement = statement.substring(psn+5).trim();
+		return "If that person is really " + restOfStatement+ ". I suggest talking to that person.";
 	}
 
 	private String transformDontWantToStatement(String statement)
@@ -114,7 +137,7 @@ public class ChatBotHuang
 	 * @param statement the user statement, assumed to contain "I want"
 	 * @return the transformed statement
 	 */
-	private String transformIWantStatement(String statement)
+	private String transformKeepStatement(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -125,15 +148,12 @@ public class ChatBotHuang
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		int psn = findKeyword (statement, "I want", 0);
-		String restOfStatement = statement.substring(psn + 6).trim();
-		return "Would you really be happy if you had " + restOfStatement + "?";
+		int psn = findKeyword (statement, "keep", 0);
+		String restOfStatement = statement.substring(psn + 7).trim();
+		return "In order to keep a " + restOfStatement + ", you must be aware.";
 	}
 	
-	private String name(String statement) 
-	{
-		//storing the name
-	}
+	
 	
 	/**
 	 * Take a statement with "I <something> you" and transform it into 
@@ -257,6 +277,7 @@ public class ChatBotHuang
 		{	
 			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
 		}	
+		
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
