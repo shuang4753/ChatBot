@@ -110,7 +110,7 @@ public class ChatBotHuang
 		
 		
 		int psn = findKeyword (statement, "is really", 0);
-		String restOfStatement = statement.substring(psn+5).trim();
+		String restOfStatement = statement.substring(psn+9).trim();
 		return "If that person is really " + restOfStatement+ ". I suggest talking to that person.";
 	}
 
