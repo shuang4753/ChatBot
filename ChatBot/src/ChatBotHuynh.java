@@ -37,14 +37,17 @@ public class ChatBotHuynh
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Why so negative?";
+			response = "THEN WHY ARE YOU TALKING TO ME!!!!";
                 	emotion--;
 		}
-		
-		else if (findKeyword(statement, "Cheat") >= 0)
+		else if (findKeyword(statement,"yes") >= 0)
 		{
-			response = "Are you positive they did?";
-			emotion++;
+			response = "awww, what are you going to do about it?";
+		}
+		else if (findKeyword(statement, "die") >= 0)
+		{
+			response = "dont think like that";
+			emotion--;
 		}
 
 		// Response transforming I want to statement
