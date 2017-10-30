@@ -47,6 +47,10 @@ public class ChatBotHuang
 		{
 			response = "You must realize how all your actions affect the other. If you do something good and she is grateful, then continue!.";	
 		}
+		else if (findKeyword(statement, "I dont want to talk to you") >= 0)
+		{
+			response = "I know talking about your problems are a hard thing. However, the first step is always the hardest. What would you like to talk about?";	
+		}
 		else if (findKeyword(statement, "I understand") >= 0) 
 		{
 			response = "Good Job Buddy!";
