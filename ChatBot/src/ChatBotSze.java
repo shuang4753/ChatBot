@@ -16,7 +16,7 @@ public class ChatBotSze
 	 */	
 	public String getGreeting()
 	{
-		return "Hey there, how's your relationship going? Please save me";
+		return "Hey there, how's your relationship going? Please save ";
 	}
 	
 	/**
