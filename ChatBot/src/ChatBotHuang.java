@@ -1,6 +1,6 @@
  import java.util.Random;
  import java.util.Scanner;
-//a
+//aa
 /**
  * A program to carry on conversations with a human user.
  * This version:
@@ -46,6 +46,10 @@ public class ChatBotHuang
 		else if (findKeyword(statement, "aware") >= 0)
 		{
 			response = "You must realize how all your actions affect the other. If you do something good and she is grateful, then continue!.";	
+		}
+		else if (findKeyword(statement, "I dont want to talk to you") >= 0)
+		{
+			response = "I know talking about your problems are a hard thing. However, the first step is always the hardest. What would you like to talk about?";	
 		}
 		else if (findKeyword(statement, "I understand") >= 0) 
 		{
