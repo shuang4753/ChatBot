@@ -25,6 +25,7 @@ public class ChatBotHuang
 		name= Username.nextLine();
 		String hiUser = "Hi " + name + " \nWhat would you like to talk about?";
 		return hiUser;
+		
 	}
 	
 	/**
@@ -44,7 +45,7 @@ public class ChatBotHuang
 		}
 		else if (findKeyword(statement, "aware") >= 0)
 		{
-			response = "When I mean aware, I mean you must realize how your actions affect the other person.";
+			response = "You must realize how all your actions affect the other. If you do something good and she is grateful, then continue!.";	
 		}
 		else if (findKeyword(statement, "I understand") >= 0) 
 		{
@@ -55,6 +56,15 @@ public class ChatBotHuang
 		{ 
 			response = "Wow that is a long time!\nSo what problems are you having in this relationship?";
                 	emotion++;
+		}
+		else if (findKeyword(statement, "breakup") >= 0)
+		{ 
+			response = "Breaking up is a very serious thing. Why do you want to break up?";
+		}
+		else if (findKeyword(statement, "ugly") >= 0) 
+		{
+			response = "No one is ugly. If you call someone ugly, the only one ugly is you.";
+			emotion--;
 		}
 		
 		
@@ -76,6 +86,14 @@ public class ChatBotHuang
 		{
 			response = transformIsReallyStatement(statement);
 		}	
+		else if (findKeyword(statement, "is very",0) >= 0)
+		{
+			response = transformIsVeryStatement(statement);
+		}	
+		else if (findKeyword(statement, "grateful ",0) >= 0)
+		{
+			response = transformGratefulGestureStatement(statement);
+		}	
 		else
 		{
 			response = getRandomResponse();
@@ -85,8 +103,8 @@ public class ChatBotHuang
 	}
 	
 	/**
-	 * Take a statement with "I want to <something>." and transform it into 
-	 * "Why do you want to <something>?"
+	 * Take a statement with "is really <something>." and transform it into 
+	 * "If that person is really <something>. I suggest talking to that person"
 	 * @param statement the user statement, assumed to contain "I want to"
 	 * @return the transformed statement
 	 */
@@ -148,6 +166,11 @@ public class ChatBotHuang
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
+		if (lastChar.equals("?"))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
 		int psn = findKeyword (statement, "keep", 0);
 		String restOfStatement = statement.substring(psn + 7).trim();
 		return "In order to keep a " + restOfStatement + ", you must be aware.";
@@ -161,7 +184,7 @@ public class ChatBotHuang
 	 * @param statement the user statement, assumed to contain "I" followed by "you"
 	 * @return the transformed statement
 	 */
-	private String transformIYouStatement(String statement)
+	private String transformIsVeryStatement(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -172,13 +195,40 @@ public class ChatBotHuang
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		
-		int psnOfI = findKeyword (statement, "I", 0);
-		int psnOfYou = findKeyword (statement, "you", psnOfI);
-		
-		String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
-		return "Why do you " + restOfStatement + " me?";
+	
+		int psn = findKeyword (statement, "is", 0);
+		String restOfStatement = statement.substring(psn ).trim();
+		return "If your partner " + restOfStatement + ", it is likely you are also" + restOfStatement.substring(2) +".";
 	}
+	/**
+	 * Statement with "is <something> a grateful gesture?" and transform it into
+	 * Yes! 
+	 * @param statement
+	 * @return
+	 */
+		private String transformGratefulGestureStatement(String statement)
+		{
+			//  Remove the final period, if there is one
+			statement = statement.trim();
+			String lastChar = statement.substring(statement
+					.length() - 1);
+			if (lastChar.equals("."))
+			{
+				statement = statement.substring(0, statement
+						.length() - 1);
+			}
+			
+			if (lastChar.equals("?"))
+			{
+				statement = statement.substring(0, statement
+						.length() - 1);
+			}
+			
+			
+			int psn = findKeyword (statement, "grateful", 0);
+			String restOfStatement = statement.substring(3,psn).trim();
+			return "Yes!" + restOfStatement +" Is a grateful gesture!";
+		}
 	
 
 	
@@ -282,12 +332,12 @@ public class ChatBotHuang
 	}
 	
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
+			//"Hmmm.",
 			"Do you really think so?",
 			"You don't say.",
-			"It's all boolean to me.",
+			//"It's all boolean to me.",
 			"So, would you like to go for a walk?",
-			"Could you say that again?"
+			//"Could you say that again?"
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
