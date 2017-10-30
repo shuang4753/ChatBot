@@ -14,8 +14,8 @@ public class ChatBotRunner
 	 */
 	public static void main(String[] args)
 	{
-		ChatBotHuynh chatbot1 = new ChatBotHuynh();
-		ChatBotHuang chatbot2 = new ChatBotHuang();
+		ChatBotHuang chatbot1 = new ChatBotHuang();
+		ChatBotHuynh chatbot2 = new ChatBotHuynh();
 		
 		//System.out.println (chatbot1.getGreeting());
 		System.out.println (chatbot2.getGreeting());
