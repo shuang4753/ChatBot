@@ -1,6 +1,6 @@
  import java.util.Random;
  import java.util.Scanner;
-//a
+//aa
 /**
  * A program to carry on conversations with a human user.
  * This version:
