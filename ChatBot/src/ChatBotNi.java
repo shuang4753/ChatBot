@@ -18,7 +18,7 @@ public class ChatBotNi {
 	 * @return a greeting
 	 */
 	public String getGreeting() {
-		return "Hi, what is up?";
+		return "Hello, how may I help you?";
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class ChatBotNi {
 		String response = "";
 
 		if (statement.length() == 0) {
-			response = "Say something, please.";
+			response = "It's okay to talk to me.";
 		}
 
 		else if (findKeyword(statement, "no") >= 0) {
@@ -44,17 +44,49 @@ public class ChatBotNi {
 			response = "More like LevinTheDream amiright?";
 			emotion++;
 		}
-
+		
+		else if (findKeyword(statement, "yes") >= 0) {
+			response = "Great! Lets start with a few questions about your relationship. How long have you two been together?";
+		}
+		
+		
+		else if (findKeyword(statement, "years") >= 0) {
+			response = "Wow that's a long time! Does she have any interests?";
+		
+		
+		} else if (findKeyword(statement, "yeah") >= 0) {
+			response = interestedIn(statement); 
+		
+			} else if (findKeyword(statement, "interested") >= 0) {
+				response = interestedIn(statement);
+				
+				} else if (findKeyword(statement, "enjoys") >= 0) {
+					response = interestedIn(statement);
+					
+					} else if (findKeyword(statement, "loves") >= 0) {
+						response = interestedIn(statement);
+						
+						} else if (findKeyword(statement, "likes") >= 0) {
+							response = interestedIn(statement);
+		}
+		
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0) {
 			response = transformIWantToStatement(statement);
 		} else if (findKeyword(statement, "I want", 0) >= 0) {
 			response = transformIWantStatement(statement);
+		} else if (findKeyword(statement, "gift", 0) >= 0) {
+			return "Do you perhaps need help picking out a gift for your significant other?";
 		} else {
 			response = getRandomResponse();
 		}
 
 		return response;
+	}
+
+	private String interestedIn(String statement) {
+		return "I love pie";
+		//findKeyword(statement, "yeah", "interested", "enjoys", "loves", "likes", "she", "in", "he", 0);
 	}
 
 	/**
@@ -76,7 +108,6 @@ public class ChatBotNi {
 		String restOfStatement = statement.substring(psn + 9).trim();
 		return "Why do you want to " + restOfStatement + "?";
 	}
-
 	/**
 	 * Take a statement with "I want <something>." and transform it into "Would you
 	 * really be happy if you had <something>?"
@@ -85,6 +116,8 @@ public class ChatBotNi {
 	 *            the user statement, assumed to contain "I want"
 	 * @return the transformed statement
 	 */
+	
+
 	private String transformIWantStatement(String statement) {
 		// Remove the final period, if there is one
 		statement = statement.trim();
@@ -134,6 +167,8 @@ public class ChatBotNi {
 	 * @return the index of the first occurrence of goal in statement or -1 if it's
 	 *         not found
 	 */
+
+	
 	private int findKeyword(String statement, String goal, int startPos) {
 		String phrase = statement.trim().toLowerCase();
 		goal = goal.toLowerCase();
@@ -171,7 +206,7 @@ public class ChatBotNi {
 
 		return -1;
 	}
-
+	
 	/**
 	 * Search for one word in phrase. The search is not case sensitive. This method
 	 * will check that the given goal is not a substring of a longer string (so, for
@@ -188,6 +223,8 @@ public class ChatBotNi {
 	private int findKeyword(String statement, String goal) {
 		return findKeyword(statement, goal, 0);
 	}
+
+	String[] notNeededWords = new String[]{ "yeah", "interested", "enjoys", "loves", "likes" };
 
 	/**
 	 * Pick a default response to use if nothing else fits.
