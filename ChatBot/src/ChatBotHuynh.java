@@ -1,4 +1,5 @@
  import java.util.Random;
+import java.util.Scanner;
 
 /**
  * A program to carry on conversations with a human user.
@@ -9,14 +10,20 @@
 public class ChatBotHuynh
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
-	int emotion = 0;
+	
+	int feels = 0;
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
 	 */	
 	public String getGreeting()
 	{
-		return "So you came here to talk about your parter cheating on you?";
+		String greeting= "Hey, it's Nick...So I heard your partner was cheating on you...Whats your name?";
+		System.out.println(greeting);
+		Scanner Username = new Scanner (System.in);
+		String name = Username.nextLine();
+		String hiUser = "So, " + name + ", do you think they are cheating on you??";
+		return hiUser;
 	}
 	
 	/**
@@ -38,18 +45,25 @@ public class ChatBotHuynh
 		else if (findKeyword(statement, "no") >= 0)
 		{
 			response = "THEN WHY ARE YOU TALKING TO ME!!!!";
-                	emotion--;
+                	feels--;
 		}
 		else if (findKeyword(statement,"yes") >= 0)
 		{
 			response = "awww, what are you going to do about it?";
+			feels++;
 		}
 		else if (findKeyword(statement, "die") >= 0)
 		{
-			response = "dont think like that";
-			emotion--;
+			
+			feels--;
+			System.out.println("Remember, cheaters are cowards that are tempted to chase the fantasy of what COULD BE...");
+			System.out.println("Instead of courageously addressing their own self-destructive behavior and cultivating WHAT IS");
 		}
-
+		else if (findKeyword(statement,"hide") >= 0)
+		{
+			response = "thats not a good sign";
+			feels++;
+		}
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -227,26 +241,27 @@ public class ChatBotHuynh
 	private String getRandomResponse ()
 	{
 		Random r = new Random ();
-		if (emotion == 0)
+		if (feels == 0)
 		{	
 			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
 		}
-		if (emotion < 0)
+		if (feels < 0)
 		{	
-			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
+			return randomSadResponses [r.nextInt(randomSadResponses.length)];
 		}	
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
+			"I don't really know what to say...",
 			"Do you really think so?",
 			"You don't say.",
-			"It's all boolean to me.",
-			"So, would you like to go for a walk?",
+			"What else do you want to talk about?",
+			"One lie is enough to question all truths ",
 			"Could you say that again?"
 	};
-	private String [] randomAngryResponses = {">:(", "OMG", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"Awww, thats amazing", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomSadResponses = {"Don't feel bad about yourself, they don't deserve you anyways", "OMG", "HARDY HAR HAR"};
+	private String [] randomHappyResponses = {"Awww, thats amazing", "Today is a good day", "you're so cute ;)"};
 	
 }
+	
