@@ -49,8 +49,9 @@ public class ChatBotHuynh
 		}
 		else if (findKeyword(statement,"yes") >= 0)
 		{
-			response = "awww, what are you going to do about it?";
+			response = partnerGender();
 			feels++;
+			
 		}
 		else if (findKeyword(statement, "die") >= 0)
 		{
@@ -79,6 +80,18 @@ public class ChatBotHuynh
 		}
 		
 		return response;
+	}
+	
+	//refer to the gender of their partner as he/she
+	private static String partnerGender(String gen)
+	{
+		System.out.println("First of all, is your partner a boy or a girl?");
+		Scanner gender = new Scanner (System.in);
+		String getGender = gender.nextLine();
+		String genderResponse = "";
+		if(gen.substring(0).equals("boy"))
+			
+		
 	}
 	
 	/**
