@@ -11,6 +11,7 @@
 public class ChatBotHuang
 {
 	public String name;
+	public String length;
 	//as user's emotion goes down, bot becomes more uplifting.
 	int emotion = 0;
 	/**
@@ -23,7 +24,7 @@ public class ChatBotHuang
 		System.out.println(greeting);
 		Scanner Username = new Scanner (System.in);
 		name= Username.nextLine();
-		String hiUser = "Hi " + name + " \nWhat would you like to talk about?";
+		String hiUser = "Hi " + name + " \nWhat do you want to talk about?";
 		return hiUser;
 		
 	}
@@ -41,7 +42,7 @@ public class ChatBotHuang
 		
 		if (statement.length() == 0)
 		{
-			response = "How long has this relationship been going?";
+			response = name + ", How long has this relationship been going?";
 		}
 		else if (findKeyword(statement, "aware") >= 0)
 		{
@@ -53,24 +54,31 @@ public class ChatBotHuang
 		}
 		else if (findKeyword(statement, "I understand") >= 0) 
 		{
-			response = "Good Job Buddy!";
+			response = "Good Job "+ name +"!";
 			emotion++;
 		}
 		else if (findKeyword(statement, "years") >= 0)
 		{ 
+			Scanner Years = new Scanner  (System.in);
+			length = Years.nextLine();
 			response = "Wow that is a long time!\nSo what problems are you having in this relationship?";
                 	emotion++;
 		}
-		else if (findKeyword(statement, "breakup") >= 0)
+		else if (findKeyword(statement, "want to breakup") >= 0)
 		{ 
-			response = "Breaking up is a very serious thing. Why do you want to break up?";
+			
+			response = "Y'all been together for"+length+". Why now?";
 		}
 		else if (findKeyword(statement, "ugly") >= 0) 
 		{
 			response = "No one is ugly. If you call someone ugly, the only one ugly is you.";
 			emotion--;
 		}
-		
+		else if (findKeyword(statement, "cheating") >= 0) 
+		{
+			response = "";
+			emotion--;
+		}
 		
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "keep") >= 0)
@@ -78,9 +86,9 @@ public class ChatBotHuang
 			response = transformKeepStatement(statement);
 			emotion++;
 		}
-		else if (findKeyword(statement, "thank you", 0) >= 0)
+		else if (findKeyword(statement, "What do I do", 0) >= 0)
 		{
-			
+			response = transformWhatDoIDoStatement(statement);
 		}
 		else if (findKeyword(statement, "dont want to", 0) >= 0)
 		{
@@ -135,6 +143,33 @@ public class ChatBotHuang
 		String restOfStatement = statement.substring(psn+9).trim();
 		return "If that person is really " + restOfStatement+ ". I suggest talking to that person.";
 	}
+	/**
+	 * Take a statement with "What do I do <something>." and transform it into
+	 * "Are you certain that is true?"
+	 * @param statement
+	 * @return
+	 */
+	private String transformWhatDoIDoStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		
+		if (lastChar.equals("?"))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		//int psn = findKeyword (statement, "What do I do", 0);
+		//String restOfStatement = statement.substring(psn).trim();
+		return "Are you certain?";
+	}
 
 	private String transformDontWantToStatement(String statement)
 	{
@@ -148,7 +183,7 @@ public class ChatBotHuang
 					.length() - 1);
 		}
 		int psn = findKeyword (statement, "dont want to", 0);
-		String restOfStatement = statement.substring(psn+9).trim();
+		String restOfStatement = statement.substring(psn+12).trim();
 		return "Why dont you want to " + restOfStatement + "?";
 	}
 
