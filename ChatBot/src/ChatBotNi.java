@@ -10,7 +10,7 @@ public class ChatBotNi {
 
 	// emotion can alter the way our bot responds. Emotion can become more negative
 	// or positive over time.
-	int emotion = 0;
+	int friendliness = 0;
 
 	/**
 	 * Get a default greeting
@@ -36,13 +36,13 @@ public class ChatBotNi {
 		}
 
 		else if (findKeyword(statement, "no") >= 0) {
-			response = "Why so negative?";
-			emotion--;
+			response = "I highly doubt that. Think beyond the obvious!";
+			friendliness--;
 		}
 
 		else if (findKeyword(statement, "levin") >= 0) {
 			response = "More like LevinTheDream amiright?";
-			emotion++;
+			friendliness++;
 		}
 		
 		else if (findKeyword(statement, "yes") >= 0) {
@@ -224,8 +224,6 @@ public class ChatBotNi {
 		return findKeyword(statement, goal, 0);
 	}
 
-	String[] notNeededWords = new String[]{ "yeah", "interested", "enjoys", "loves", "likes" };
-
 	/**
 	 * Pick a default response to use if nothing else fits.
 	 * 
@@ -233,19 +231,20 @@ public class ChatBotNi {
 	 */
 	private String getRandomResponse() {
 		Random r = new Random();
-		if (emotion == 0) {
+		if (friendliness == 0) {
 			return randomNeutralResponses[r.nextInt(randomNeutralResponses.length)];
 		}
-		if (emotion < 0) {
+		if (friendliness < 0) {
 			return randomAngryResponses[r.nextInt(randomAngryResponses.length)];
 		}
 		return randomHappyResponses[r.nextInt(randomHappyResponses.length)];
 	}
 
-	private String[] randomNeutralResponses = { "Interesting, tell me more", "Hmmm.", "Do you really think so?",
-			"You don't say.", "It's all boolean to me.", "So, would you like to go for a walk?",
-			"Could you say that again?" };
-	private String[] randomAngryResponses = { "Bahumbug.", "Harumph", "The rage consumes me!" };
+	private String[] randomNeutralResponses = 
+			{ "Tell me about it.", "Don't know what to think about that.",
+			"That's interesting!", "That's intriguing!", "Lets not talk about that. It's confusing.",
+			"Sorry I don't know how to respond to something like that." };
+	private String[] randomAngryResponses = { "You're really annoying you know.", "What do you want now?", "Your personality disgustes me." };
 	private String[] randomHappyResponses = { "H A P P Y, what's that spell?", "Today is a good day",
 			"You make me feel like a brand new pair of shoes." };
 
