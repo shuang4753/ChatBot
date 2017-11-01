@@ -95,5 +95,6 @@ public class ChatBotRunner
 			//how do we make it re-prompt the user if it comes to this??
 			//breaks if the input isn't valid
 			}
+		input.close();
 	}
 }
