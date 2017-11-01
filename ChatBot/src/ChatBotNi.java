@@ -21,7 +21,8 @@ public class ChatBotNi {
 	 * @return a greeting
 	 */
 	public String getGreeting() {
-		return "Hello, how may I help you?";
+		
+		return "Hello, how can I assist you?";
 	}
 
 	/**
@@ -33,10 +34,13 @@ public class ChatBotNi {
 	 */
 	public String getResponse(String statement) {
 		String response = "";
+		
 		if (friendliness <= -5) {
 			return "Leave me alone, I don't want to talk to you.";
+		
 		} else if ((friendliness >= 10) && (findKeyword(statement, "you're cute", 0) >= 0)) {
 			response = "You're the cutest thing I've seen! You forget about your gift I'll be a better partner!";
+		
 		} else if (statement.length() == 0) {
 			response = "It's okay to talk to me.";
 		}
@@ -44,6 +48,13 @@ public class ChatBotNi {
 		else if (findKeyword(statement, "no") >= 0) {
 			response = "I highly doubt that. Think beyond the obvious!";
 			friendliness--;
+			deepnessOfLove--;
+		}
+		
+		else if (findKeyword(statement, "thank") >= 0) {
+			response = "You're so nice! Anything for a cutie like you.";
+			} else if (findKeyword(statement, "thanks") >= 0) {
+				response = "You're so nice! Anything for a cutie like you.";
 		}
 
 		else if (findKeyword(statement, "nice") >= 0) {
@@ -54,40 +65,53 @@ public class ChatBotNi {
 		else if (findKeyword(statement, "yes") >= 0) {
 			response = "Great! Lets start with a few questions about your relationship. How long have you two been together?";
 			friendliness++;
+			deepnessOfLove++;
 		}
-		
 		
 		else if (findKeyword(statement, "years") >= 0) {
 			response = "Wow that's a long time! Does she have any interests?";
 			friendliness++;
 			deepnessOfLove++;
+		}
+		
+		else if ((statement.equals("I love her") || statement.equals("I love him"))) {
+			response = "That's adorable!";
+			deepnessOfLove+=2;
 		
 		
 		} else if (findKeyword(statement, "yeah") >= 0) {
 			response = interestedIn(statement); 
 				friendliness++;
+				deepnessOfLove++;
 			} else if (findKeyword(statement, "interested") >= 0) {
 				response = interestedIn(statement);
 					friendliness++;
+					deepnessOfLove++;
 				} else if (findKeyword(statement, "enjoys") >= 0) {
 					response = interestedIn(statement);
 					 friendliness++;
+					 deepnessOfLove++;
 					} else if (findKeyword(statement, "loves") >= 0) {
 						response = interestedIn(statement);
 							friendliness++;
+							deepnessOfLove++;
 						} else if (findKeyword(statement, "likes") >= 0) {
 							response = interestedIn(statement);
 								friendliness++;
+								deepnessOfLove++;
 		}					
 		
 		else if (findKeyword(statement, "Ok") >= 0) {
 			response = googleSearch(statement);
 		}	
+		
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0) {
 			response = transformIWantToStatement(statement);
+			
 		} else if (findKeyword(statement, "I want", 0) >= 0) {
 			response = transformIWantStatement(statement);
+			
 		} else if (findKeyword(statement, "gift", 0) >= 0) {
 			response = "Do you perhaps need help picking out a gift for your significant other?";
 				deepnessOfLove++;
@@ -100,6 +124,15 @@ public class ChatBotNi {
 					} else if (findKeyword(statement, "presents", 0) >= 0) {
 						response = "Do you perhaps need help picking out a gift for your significant other?";
 							deepnessOfLove++;
+						} else if (findKeyword(statement, "get", 0) >= 0) {
+							response = "Do you perhaps need help picking out a gift for your significant other?";
+								deepnessOfLove++;
+							} else if (findKeyword(statement, "give", 0) >= 0) {
+								response = "Do you perhaps need help picking out a gift for your significant other?";
+									deepnessOfLove++;
+								} else if (findKeyword(statement, "send", 0) >= 0) {
+									response = "Do you perhaps need help picking out a gift for your significant other?";
+										deepnessOfLove++;
 					
 		} else {
 			response = getRandomResponse();
@@ -107,7 +140,7 @@ public class ChatBotNi {
 
 		return response;
 	}
-	
+		//base string to record interests
 		private String capInterested;
 	
 	//private String giftSearch() {
@@ -138,7 +171,7 @@ public class ChatBotNi {
 			String searchURLSFinal = searchURL.replaceAll(" ", "%20");
 			String finalURL = "Great! Lets find your cutie pie a gift!"
 					+" Personally, I always recommend the first website as a recommendation!"
-					+" " + searchURLSFinal;
+					+" If you need anything else just tell me :D!";
 			try {
 				Process po = Runtime.getRuntime().exec("C:\\Program Files\\Internet Explorer\\iexplore.exe " + searchURLSFinal);
 			} catch (IOException e) {

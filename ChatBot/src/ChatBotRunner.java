@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 /**
  * A simple class to run our chatbot teams.
- * @author Simon Huang, Nicholas Huynh, Kewu Sze, Handi Ni
+ * @author Simon Huang, Nicholas Huynh, Kewu Sze, Handy Ni
  * @version September 2017
  * Theme: Relationship Advice
  */
@@ -42,6 +42,7 @@ public class ChatBotRunner
 					System.out.println(chatbot1.getResponse(statement));
 					statement = in.nextLine();
 				}
+				main(null);
 			}
 	
 		else if(guy.equals("2"))
@@ -56,6 +57,7 @@ public class ChatBotRunner
 				System.out.println(chatbot2.getResponse(statement));
 				statement = in.nextLine();
 			}
+			main(null);
 		}
 		
 		else if(guy.equals("3"))
@@ -70,6 +72,7 @@ public class ChatBotRunner
 				System.out.println(chatbot3.getResponse(statement));
 				statement = in.nextLine();
 			}
+			main(null);
 		}
 	
 		else if(guy.equals("4"))
@@ -84,6 +87,7 @@ public class ChatBotRunner
 				System.out.println(chatbot4.getResponse(statement));
 				statement = in.nextLine();
 			}
+			main(null);
 		}
 		else
 			{
