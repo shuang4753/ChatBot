@@ -10,7 +10,7 @@ public class ChatBotSze
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	int positivity = 0;
-	int negativity = 0;
+	int negativity = 0; //
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
