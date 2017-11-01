@@ -49,9 +49,18 @@ public class ChatBotHuynh
 		}
 		else if (findKeyword(statement,"yes") >= 0)
 		{
-			response = partnerGender();
-			feels++;
-			
+			System.out.println("First of all, is it a boy or girl");
+			Scanner gen = new Scanner(System.in);
+			String gender = gen.nextLine();
+			if (gender.substring(0).equals("boy"))
+			{
+				response = "oh ... of course its a guy, makes sense";
+			}
+			else
+			{
+				response= "oh ... of course it's a girl";
+			}
+			//how do I make it refer to the partner as a he/she throughout the program?
 		}
 		else if (findKeyword(statement, "die") >= 0)
 		{
@@ -82,17 +91,6 @@ public class ChatBotHuynh
 		return response;
 	}
 	
-	//refer to the gender of their partner as he/she
-	private static String partnerGender(String gen)
-	{
-		System.out.println("First of all, is your partner a boy or a girl?");
-		Scanner gender = new Scanner (System.in);
-		String getGender = gender.nextLine();
-		String genderResponse = "";
-		if(gen.substring(0).equals("boy"))
-			
-		
-	}
 	
 	/**
 	 * Take a statement with "I want to <something>." and transform it into 
@@ -245,8 +243,16 @@ public class ChatBotHuynh
 		return findKeyword (statement, goal, 0);
 	}
 	
+	private String getQuotes()
+	{
+		"there are plenty of fish in the sea"
+		"Cheating on a good person is like throwing away a diamond and picking up a rock"
+	}
 
-
+	
+	
+	
+	
 	/**
 	 * Pick a default response to use if nothing else fits.
 	 * @return a non-committal string

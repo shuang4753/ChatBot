@@ -5,7 +5,7 @@
  * This version:
  * @author Kewu Sze
  * @version September 2017
- */./
+ **/
 public class ChatBotSze
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
