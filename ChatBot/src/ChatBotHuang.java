@@ -19,12 +19,13 @@ public class ChatBotHuang
 	 * @return a greeting
 	 */	
 	public String getGreeting()
-	{
-		String greeting= "Hi, my name is Simon! I give positive relationship advice. What is your name?";
+	{	
+		String greeting= "Hi, my name is Simon! I give positive relationship advice. What is your name?"+ 
+				"\nAfter your name, please answer in complete sentences and grammar. Thx :)";
 		System.out.println(greeting);
 		Scanner Username = new Scanner (System.in);
 		name= Username.nextLine();
-		String hiUser = "Hi " + name + " \nWhat do you want to talk about?";
+		String hiUser = "Hi " + name + " \nWhat do you want to talk about? "+ getRandomResponse();
 		return hiUser;
 		
 	}
@@ -42,74 +43,80 @@ public class ChatBotHuang
 		
 		if (statement.length() == 0)
 		{
-			response = name + ", How long has this relationship been going?";
-		}
+			response = "\nWow! No problems heh? You must have things on LOCKDOWN."+ "\nAre you sure though? " + getRandomResponse();
+			emotion++; }
+		
 		else if (findKeyword(statement, "aware") >= 0)
 		{
-			response = "You must realize how all your actions affect the other. If you do something good and she is grateful, then continue!.";	
-		}
+			response = "You must realize how all your actions affect the other. If you do something good and she is grateful, then continue!.";	}
+		
+		
+		else if (findKeyword(statement, "I don't know") >= 0)
+		{
+			response = "Don't you care about this relationship?";	}
+		
+		
 		else if (findKeyword(statement, "I dont want to talk to you") >= 0)
 		{
-			response = "I know talking about your problems are a hard thing. However, the first step is always the hardest. What would you like to talk about?";	
-		}
+			response = "I know talking about your problems are a hard thing. However, the first step is always the hardest. What would you like to talk about?"; }
+		
+		
 		else if (findKeyword(statement, "I understand") >= 0) 
 		{
 			response = "Good Job "+ name +"!";
-			emotion++;
-		}
+			emotion++; }
+		
 		else if (findKeyword(statement, "years") >= 0)
 		{ 
 			Scanner Years = new Scanner  (System.in);
-			length = Years.nextLine();
-			response = "Wow that is a long time!\nSo what problems are you having in this relationship?";
-                	emotion++;
-		}
-		else if (findKeyword(statement, "want to breakup") >= 0)
-		{ 
 			
-			response = "Y'all been together for"+length+". Why now?";
-		}
-		else if (findKeyword(statement, "ugly") >= 0) 
+			response = "Wow that is a long time!\nSo what problems are you having in this relationship?";
+                	emotion++; }
+                	//length = Years.nextLine(); }
+		
+                	else if (findKeyword(statement, "ugly") >= 0) 
 		{
 			response = "No one is ugly. If you call someone ugly, the only one ugly is you.";
-			emotion--;
-		}
+			emotion--; }
+                	
 		else if (findKeyword(statement, "cheating") >= 0) 
 		{
 			response = "";
-			emotion--;
-		}
+			emotion--; }
 		
 		// Response transforming I want to statement
+		else if (findKeyword(statement, "No, I don't want to breakup") >= 0)
+		{ 
+			response = transformNoBreakupStatement(statement); }
+                	
 		else if (findKeyword(statement, "keep") >= 0)
 		{
 			response = transformKeepStatement(statement);
-			emotion++;
-		}
+			emotion++; }
+                	
 		else if (findKeyword(statement, "What do I do", 0) >= 0)
 		{
-			response = transformWhatDoIDoStatement(statement);
-		}
+			response = transformWhatDoIDoStatement(statement); }
+                	
 		else if (findKeyword(statement, "dont want to", 0) >= 0)
 		{
-			response = transformDontWantToStatement(statement);
-		}
+			response = transformDontWantToStatement(statement); }
+                	
 		else if (findKeyword(statement, "is really",0) >= 0)
 		{
-			response = transformIsReallyStatement(statement);
-		}	
+			response = transformIsReallyStatement(statement); }
+                	
 		else if (findKeyword(statement, "is very",0) >= 0)
 		{
-			response = transformIsVeryStatement(statement);
-		}	
+			response = transformIsVeryStatement(statement); }
+                	
 		else if (findKeyword(statement, "grateful ",0) >= 0)
 		{
-			response = transformGratefulGestureStatement(statement);
-		}	
+			response = transformGratefulGestureStatement(statement); }
+                	
 		else
 		{
-			response = getRandomResponse();
-		}
+			response = getRandomResponse(); }
 		
 		return response;
 	}
@@ -143,12 +150,7 @@ public class ChatBotHuang
 		String restOfStatement = statement.substring(psn+9).trim();
 		return "If that person is really " + restOfStatement+ ". I suggest talking to that person.";
 	}
-	/**
-	 * Take a statement with "What do I do <something>." and transform it into
-	 * "Are you certain that is true?"
-	 * @param statement
-	 * @return
-	 */
+
 	private String transformWhatDoIDoStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -166,8 +168,7 @@ public class ChatBotHuang
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		//int psn = findKeyword (statement, "What do I do", 0);
-		//String restOfStatement = statement.substring(psn).trim();
+
 		return "Are you certain?";
 	}
 
@@ -187,13 +188,7 @@ public class ChatBotHuang
 		return "Why dont you want to " + restOfStatement + "?";
 	}
 
-	
-	/**
-	 * Take a statement with "I want <something>." and transform it into 
-	 * "Would you really be happy if you had <something>?"
-	 * @param statement the user statement, assumed to contain "I want"
-	 * @return the transformed statement
-	 */
+
 	private String transformKeepStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -214,15 +209,6 @@ public class ChatBotHuang
 		String restOfStatement = statement.substring(psn + 7).trim();
 		return "In order to keep a " + restOfStatement + ", you must be aware.";
 	}
-	
-	
-	
-	/**
-	 * Take a statement with "I <something> you" and transform it into 
-	 * "Why do you <something> me?"
-	 * @param statement the user statement, assumed to contain "I" followed by "you"
-	 * @return the transformed statement
-	 */
 	private String transformIsVeryStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -239,12 +225,7 @@ public class ChatBotHuang
 		String restOfStatement = statement.substring(psn ).trim();
 		return "If your partner " + restOfStatement + ", it is likely you are also" + restOfStatement.substring(2) +".";
 	}
-	/**
-	 * Statement with "is <something> a grateful gesture?" and transform it into
-	 * Yes! 
-	 * @param statement
-	 * @return
-	 */
+	
 		private String transformGratefulGestureStatement(String statement)
 		{
 			//  Remove the final period, if there is one
@@ -267,6 +248,29 @@ public class ChatBotHuang
 			int psn = findKeyword (statement, "grateful", 0);
 			String restOfStatement = statement.substring(3,psn).trim();
 			return "Yes!" + restOfStatement +" Is a grateful gesture!";
+		}
+		private String transformNoBreakupStatement(String statement)
+		{
+			//  Remove the final period, if there is one
+			statement = statement.trim();
+			String lastChar = statement.substring(statement
+					.length() - 1);
+			if (lastChar.equals("."))
+			{
+				statement = statement.substring(0, statement
+						.length() - 1);
+			}
+			
+			if (lastChar.equals("?"))
+			{
+				statement = statement.substring(0, statement
+						.length() - 1);
+			}
+			
+			
+			int psn = findKeyword (statement, "is really", 0);
+			String restOfStatement = statement.substring(psn+9).trim();
+			return "If that person is really " + restOfStatement+ ". I suggest talking to that person.";
 		}
 	
 
@@ -370,13 +374,8 @@ public class ChatBotHuang
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			//"Hmmm.",
-			"Do you really think so?",
-			"You don't say.",
-			//"It's all boolean to me.",
-			"So, would you like to go for a walk?",
-			//"Could you say that again?"
+	private String [] randomNeutralResponses = {"How long has this relationship been going?",
+			"Do you guys want to breakup?"
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
