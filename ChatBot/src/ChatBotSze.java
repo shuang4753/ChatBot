@@ -9,8 +9,7 @@
 public class ChatBotSze
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
-	int positivity = 0;
-	int negativity = 0; //
+	int emotion = 0;
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
@@ -34,25 +33,34 @@ public class ChatBotSze
 		if (statement.length() == 0)
 		{
 			response = "That's it, keep your anger bottled up.";
-			negativity--;
+			emotion--;
 		}
 		else if(findKeyword(statement, "ok") >=0)
 		{
-			response = "Well, how can it be better?";
+			response = "Let's fix that shall we?";
 		}
 		
 		else if (findKeyword(statement, "cheated, broke up, dumped") >= 0)
 		{
 			response = "Did you dump them yet?";
-                	negativity--;
+                	emotion--;
 		}
-		
+		else if (findKeyword(statement, "I don't to talk about it") >=0)
+		{
+			response = "Why don't you want to talk about";
+			emotion--;
+		}
+		else if( findKeyword(statement, "kill my myself")>=0)
+		{
+			response = "Don't talk about suicide, they aren't worth it";
+			emotion--;
+		}
 		else if (findKeyword(statement, "great well good") >= 0)
 		{
 			response = "That's nice I guess.";
-			positivity++;
+			emotion++;
 		}
-		if (positivity >= 3)
+		if (emotion >= 3)
 		{
 			System.out.println("It sounds like your relationship is going great. Unless you want to break up, I'd suggesst talking to another chatbot.");
 		}
@@ -249,10 +257,10 @@ public class ChatBotSze
 			"How's that going to help",
 			"You don't say",
 			"Anything you want to do?",
-			"When's the last time you went on a date?",
+			"What happend the last time you saw each other?",
 			"I'm sorry, could you say that again?"
 	};
-	private String [] randomAngryResponses = {"Dump Them.", "You should release revealing picture of them they sent you to the internet.", "You should smash the windows of their car. That'll prove a point"};
+	private String [] randomAngryResponses = {"Why not just dump them?", "You should release revealing picture of them they sent you to the internet.", "You should smash the windows of their car. That'll prove a point"};
 	private String [] randomHappyResponses = {"Thats nice I guess", "So you're in a happy realtionship.", "Why are you even speaking to me?", "Are you talking to me just to make me sad?"};
 	
 }
