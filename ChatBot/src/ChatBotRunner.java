@@ -18,7 +18,7 @@ public class ChatBotRunner
 		ChatBotHuynh chatbot2 = new ChatBotHuynh();
 		ChatBotNi chatbot3 = new ChatBotNi();
 		ChatBotSze chatbot4 = new ChatBotSze();
-		
+	
 		System.out.println("Who do you want advice from?");
 		System.out.println("____________________________");
 		System.out.println("1 - The guy with decent advice");
@@ -26,6 +26,7 @@ public class ChatBotRunner
 		System.out.println("3 - The guy who tells you what to get for your significant other");
 		System.out.println("4 - The guy who gives bad advice");
 		System.out.println("pick your guy");
+		System.out.println("**ONLY ENTER NUMBERS FROM 1-4**");
 		
 		Scanner input = new Scanner(System.in);
 		String guy = input.nextLine();
