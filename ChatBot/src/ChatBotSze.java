@@ -39,32 +39,36 @@ public class ChatBotSze
 		{
 			response = "Let's fix that shall we?";
 		}
-		
-		else if (findKeyword(statement, "cheated, broke up, dumped") >= 0)
+		else if (findKeyword(statement, "cheated") >= 0)
 		{
-			response = "Did you dump them yet?";
+			response = "That's a shame. Have you thought about getting revenge?";
                 	emotion--;
 		}
-		else if (findKeyword(statement, "I don't to talk about it") >=0)
+		else if( findKeyword(statement, "kill myself")>=0)
 		{
-			response = "Why don't you want to talk about";
+			response = "Suicide is the easy way out. At least get some revenge before you do it.";
 			emotion--;
 		}
-		else if( findKeyword(statement, "kill my myself")>=0)
-		{
-			response = "Don't talk about suicide, they aren't worth it";
-			emotion--;
-		}
-		else if (findKeyword(statement, "great well good") >= 0)
+		else if (findKeyword(statement, "great") >= 0)
 		{
 			response = "That's nice I guess.";
 			emotion++;
 		}
-		if (emotion >= 3)
+		else if (findKeyword(statement, "well") >= 0)
+		{
+			response = "It's just going well? Anything we can do to change that?";
+			emotion++;
+		}
+		else if (findKeyword(statement, "good") >= 0)
+		{
+			response = "That's nice I guess.";
+			emotion++;
+		}
+		else if (emotion >= 3)
 		{
 			System.out.println("It sounds like your relationship is going great. Unless you want to break up, I'd suggesst talking to another chatbot.");
 		}
-		// Revenge Plot
+
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
 			response = transformIWantToStatement(statement);
@@ -80,6 +84,22 @@ public class ChatBotSze
 		
 		return response;
 	}
+	// fight/argument response
+	public String respondTo(String statement)
+	{
+		String response = "";
+		
+		if(findKeyword(statement, "No we haven't had a fight") >=0)
+		{
+			response = "Have they done anything to annoy you?";
+		}
+		
+		else if (findKeyword(statement, "Yes we had a fight recently") >=0)
+		{
+			response = "What did you fight about?";
+		}
+		return response;
+	}
 	
 	/**
 	 * Take a statement with "I want to <something>." and transform it into 
@@ -89,7 +109,6 @@ public class ChatBotSze
 	 */
 	private String transformIWantToStatement(String statement)
 	{
-		//  Remove the final period, if there is one
 		statement = statement.trim();
 		String lastChar = statement.substring(statement
 				.length() - 1);
@@ -100,7 +119,7 @@ public class ChatBotSze
 		}
 		int psn = findKeyword (statement, "I want to", 0);
 		String restOfStatement = statement.substring(psn + 9).trim();
-		return "How much damgae will " + restOfStatement + "do?";
+		return "Why do you want to " + restOfStatement + "?";
 	}
 
 	
@@ -133,6 +152,7 @@ public class ChatBotSze
 	 * @param statement the user statement, assumed to contain "I" followed by "you"
 	 * @return the transformed statement
 	 */
+	@SuppressWarnings("unused")
 	private String transformIYouStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -254,13 +274,13 @@ public class ChatBotSze
 	
 	private String [] randomNeutralResponses = {"Is that so?",
 			"That's nice",
-			"How's that going to help",
-			"You don't say",
-			"Anything you want to do?",
+			"What's that going to do?",
+			"Have you had a fight recently?",
+			"Do you have any plans with them?",
 			"What happend the last time you saw each other?",
 			"I'm sorry, could you say that again?"
 	};
 	private String [] randomAngryResponses = {"Why not just dump them?", "You should release revealing picture of them they sent you to the internet.", "You should smash the windows of their car. That'll prove a point"};
-	private String [] randomHappyResponses = {"Thats nice I guess", "So you're in a happy realtionship.", "Why are you even speaking to me?", "Are you talking to me just to make me sad?"};
+	private String [] randomHappyResponses = {"Thats nice I guess", "So you're in a happy realtionship.", "Why are you even speaking to me?"};
 	
 }
