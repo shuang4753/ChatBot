@@ -243,13 +243,16 @@ public class ChatBotHuynh
 		return findKeyword (statement, goal, 0);
 	}
 	
-	private String getQuotes()
+	private String getRandomQuote()
 	{
-		"there are plenty of fish in the sea"
-		"Cheating on a good person is like throwing away a diamond and picking up a rock"
+		Random r = new Random ();
+		return randomQuote [r.nextInt(randomQuote.length)];
 	}
-
 	
+	private String [] randomQuote = {"there are plenty of fish in the sea",
+			"Cheating on a good person is like throwing away a diamond and picking up a rock"
+	};
+
 	
 	
 	
