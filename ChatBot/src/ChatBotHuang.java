@@ -15,6 +15,7 @@ public class ChatBotHuang
 	public String health;
 	//as user's emotion goes down, bot becomes more uplifting.
 	int emotion = 0;
+	int breakupvars = 0;
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
@@ -22,11 +23,14 @@ public class ChatBotHuang
 	public String getGreeting()
 	{	
 		String greeting= "Hi, my name is Simon! I give positive relationship advice. What is your name?"+ 
-				"\nAfter your name, please answer in complete sentences and grammar. Thx :)";
+				"\nAfter your name, please answer in COMPLETE SENTENCES and GRAMMAR. Thx :)"
+				+ "\nIf stuck just press ENTER";
 		System.out.println(greeting);
-		Scanner input = new Scanner (System.in);
-		name= input.nextLine();
-		String hiUser = "Hi " + name + " \nWhat do you want to talk about first? Breakups or how to keep a relationship healthy?";
+		Scanner in = new Scanner (System.in);
+		name= in.nextLine();
+		String hiUser = "Hi " + name + " \nWhat do you want to talk about first? "
+				+ "\nLet's start talking about either breakups or how to keep a relationship healthy?"
+				+ "\nIf stuck just press ENTER\n";
 		return hiUser;
 		
 	}
@@ -61,20 +65,17 @@ public class ChatBotHuang
 		else if (findKeyword(statement, "aware") >= 0)
 		{
 			response = "You must realize how all your actions affect the other. If you do something good and he/she is grateful, then continue!"
-					+ "\nIf he/she becomes sad or angry :( Then stop!";	}
+					+ "\nIf he/she becomes sad or angry :( Then stop!"
+					+ "\nDo you understand?" ;	}
 		
 		
-		else if (findKeyword(statement, "I don't know") >= 0)
+		else if (findKeyword(statement, "breakups") >= 0)
 		{
-			response = "Don't you care about this relationship?";	}
-		
-		
-		else if (findKeyword(statement, "I don't want to talk to you") >= 0)
-		{
-			response = "I know talking about personal problems are a hard thing. However, the first step is always the hardest."
-					+ "\nWhat would you like to talk about?" 
-					+ "\nIf you really do not like me, say Bye"; 
+			response = transformBreakupStatement(statement);
 			emotion--; }
+		
+		
+	
 		
 			else if (findKeyword(statement, "I understand") >= 0) 
 			{
@@ -90,6 +91,10 @@ public class ChatBotHuang
 				{
 					response = transformGoodJobStatement(statement);
 					emotion++; }
+			else if (findKeyword(statement, "I think so") >= 0) 
+			{
+				response = transformGoodJobStatement(statement);
+				emotion++; }
 		
 		else if (findKeyword(statement, "years") >= 0)
 				{ 
@@ -109,6 +114,11 @@ public class ChatBotHuang
 			emotion--; }
 		
 		// Response transforming I want to statement
+		else if (findKeyword(statement, "I don't want to talk to you") >= 0)
+		{
+			response = transformRecoveryStatement(statement);
+			emotion--; }
+		
 		else if (findKeyword(statement, "No, I don't want to breakup") >= 0)
 		{ 
 			response = transformNoBreakupStatement(statement); }
@@ -122,7 +132,7 @@ public class ChatBotHuang
 		{
 			response = transformWhatDoIDoStatement(statement); }
                 	
-		else if (findKeyword(statement, "dont want to", 0) >= 0)
+		else if (findKeyword(statement, "don't want to", 0) >= 0)
 		{
 			response = transformDontWantToStatement(statement); }
                 	
@@ -132,7 +142,7 @@ public class ChatBotHuang
                 	
 		else if (findKeyword(statement, "is very",0) >= 0)
 		{
-			response = transformIsVeryStatement(statement); }
+			response = transformIsReallyStatement(statement); }
 		
 		else if (findKeyword(statement, "I think my partner",0) >= 0)
 		{
@@ -199,6 +209,26 @@ public class ChatBotHuang
 
 		return "Are you certain?";
 	}
+	private String transformBreakupStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		
+		if (lastChar.equals("?"))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		
+		return getRandomResponse();
+	}
 
 	private String transformDontWantToStatement(String statement)
 	{
@@ -211,9 +241,9 @@ public class ChatBotHuang
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		int psn = findKeyword (statement, "dont want to", 0);
+		int psn = findKeyword (statement, "don't want to", 0);
 		String restOfStatement = statement.substring(psn+12).trim();
-		return "Why dont you want to " + restOfStatement + "?";
+		return "Why don't you want to " + restOfStatement + "?";
 	}
 	
 	private String transformIThinkMyPartnerStatement(String statement)
@@ -245,8 +275,7 @@ public class ChatBotHuang
 		}
 		System.out.println();
 		return "I know talking about personal problems are a hard thing. However, the first step is always the hardest."
-		+ "\nWhat would you like to talk about?" 
-		+ "\nIf you really do not like me, say Bye"; 
+		+ "\nWhat would you like to talk about?" ; 
 	}
 	
 	private String transformGoodJobStatement(String statement)
@@ -439,15 +468,17 @@ public class ChatBotHuang
 	private String getRandomResponse ()
 	{
 		Random r = new Random ();
-	
+		if (breakupvars ==0)
+		{
+			return randomBreakupResponse[r.nextInt(randomBreakupResponse.length)]; 		}
 		if (emotion > 2)
 		{	
-			return randomHappyResponses [r.nextInt(randomAngryResponses.length)];
-		}	
+			return randomHappyResponses [r.nextInt(randomAngryResponses.length)];	 }	
+		
 		if (emotion < 0 )
 		{
-		return randomAngryResponses [r.nextInt(randomHappyResponses.length)];
-		}
+		return randomAngryResponses [r.nextInt(randomHappyResponses.length)];	}
+		
 		return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
 	}
 	
@@ -458,5 +489,5 @@ public class ChatBotHuang
 	};
 	private String [] randomAngryResponses = {"Honey, you are something special! I recommend talking to me more!"};
 	private String [] randomHappyResponses = {"Buddy, you are on a roll! I think you are prepared to have long-term relationships!"};
-	
+	private String [] randomBreakupResponse = {"Is your partner hot?", "Do you think this relationship should end?"};
 }

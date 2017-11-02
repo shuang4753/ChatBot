@@ -1,4 +1,5 @@
- import java.util.Random;
+ import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -71,8 +72,9 @@ public class ChatBotHuynh
 		}
 		else if (findKeyword(statement,"hide") >= 0)
 		{
-			response = "thats not a good sign";
+			response = getRandomQuote();
 			feels++;
+			
 		}
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0)
@@ -253,8 +255,25 @@ public class ChatBotHuynh
 			"Cheating on a good person is like throwing away a diamond and picking up a rock"
 	};
 
-	
-	
+	private String googleSearch(String statement) {
+		{
+			String googleURL = "https://www.google.com/search";
+			String searchURL = googleURL + "?q=" + " dating websites";
+			String searchURLSFinal = searchURL.replaceAll(" ", "%20");
+			String finalURL = "Now look for someone else to be with"
+				+"I'm single btw)";
+			
+		try {
+			Process po = Runtime.getRuntime().exec("C:\\Program Files\\Internet Explorer\\iexplore.exe " + searchURLSFinal);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return finalURL;
+		}
+	}
+		
 	
 	/**
 	 * Pick a default response to use if nothing else fits.
@@ -276,7 +295,7 @@ public class ChatBotHuynh
 	
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"I don't really know what to say...",
-			"Do you really think so?",
+			"Dont blame yourself",
 			"You don't say.",
 			"What else do you want to talk about?",
 			"One lie is enough to question all truths ",
