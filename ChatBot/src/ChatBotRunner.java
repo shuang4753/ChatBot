@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 /**
  * A simple class to run our chatbot teams.
- * @author Simon Huang, Nicholas Huynh, Kewu Sze, Handy Ni
+ * @author Simon Huang, Nicholas Huynh, Kewu Sze, Andy Ni
  * @version September 2017
  * Theme: Relationship Advice
  */
