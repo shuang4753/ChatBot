@@ -23,68 +23,81 @@ public class ChatBotHuynh
 		System.out.println(greeting);
 		Scanner Username = new Scanner (System.in);
 		String name = Username.nextLine();
-		String hiUser = "So, " + name + ", do you think they are cheating on you??";
+		String hiUser = "So, " + name + ", What do you want to talk about?";
 		return hiUser;
 	}
 	
 	/**
 	 * Gives a response to a user statement
 	 * 
-	 * @param statement
+	 * @param whatTheySay
 	 *            the user statement
 	 * @return a response based on the rules given
 	 */
-	public String getResponse(String statement)
+	public String getResponse(String whatTheySay)
 	{
 		String response = "";
 		
-		if (statement.length() == 0)
+		if (whatTheySay.length() == 0)
 		{
 			response = "Baby come back to me";
 		}
 
-		else if (findKeyword(statement, "no") >= 0)
+		else if (findKeyword(whatTheySay, "no") >= 0)
 		{
 			response = "THEN WHY ARE YOU TALKING TO ME!!!!";
                 	feels--;
 		}
-		else if (findKeyword(statement,"yes") >= 0)
+		else if (findKeyword(whatTheySay,"kill") >= 0)
 		{
-			System.out.println("First of all, is it a boy or girl");
-			Scanner gen = new Scanner(System.in);
-			String gender = gen.nextLine();
-			if (gender.substring(0).equals("boy"))
-			{
-				response = "oh ... of course its a guy, makes sense";
-			}
-			else
-			{
-				response= "oh ... of course it's a girl";
-			}
-			//how do I make it refer to the partner as a he/she throughout the program?
+			response = "That's not a good way to think";
+		
 		}
-		else if (findKeyword(statement, "die") >= 0)
+		else if (findKeyword(whatTheySay, "die") >= 0)
 		{
 			
 			feels--;
 			System.out.println("Remember, cheaters are cowards that are tempted to chase the fantasy of what COULD BE...");
 			System.out.println("Instead of courageously addressing their own self-destructive behavior and cultivating WHAT IS");
 		}
-		else if (findKeyword(statement,"hide") >= 0)
+		else if (findKeyword(whatTheySay,"hide") >= 0)
 		{
 			response = getRandomQuote();
 			feels++;
 			
 		}
-		// Response transforming I want to statement
-		else if (findKeyword(statement, "I want to", 0) >= 0)
+		else if (findKeyword(whatTheySay,"hurt") >= 0)
 		{
-			response = transformIWantToStatement(statement);
+			response = "how about we take a look at the hurt-o-meter and you tell me how you feel";
+			hurtMeter(response);
+			feels++;
 		}
-		else if (findKeyword(statement, "I want",0) >= 0)
+		// Response transforming I want to statement
+		else if (findKeyword(whatTheySay, "I want to", 0) >= 0)
 		{
-			response = transformIWantStatement(statement);
+			response = transformIWantToStatement(whatTheySay);
+		}
+		else if (findKeyword(whatTheySay, "I want",0) >= 0)
+		{
+			response = transformIWantStatement(whatTheySay);
 		}	
+		else if (findKeyword(whatTheySay,"gift") >= 0)
+		{
+			ChatBotNi chatbot3 = new ChatBotNi();
+			System.out.print(chatbot3.getGreeting());
+			Scanner in = new Scanner(System.in);
+			
+			String statement = in.nextLine();
+			
+				while (!statement.equals("Bye"))
+				{
+					//System.out.println (chatbot3.getResponse(statement));
+					System.out.println(chatbot3.getResponse(statement));
+					statement = in.nextLine();
+				}
+			
+		}
+		
 		else
 		{
 			response = getRandomResponse();
@@ -92,6 +105,64 @@ public class ChatBotHuynh
 		
 		return response;
 	}
+	public static String hurtMeter(String hurtScale)
+	{
+		
+		System.out.println("from a scale from 1 - 10, how badly are you hurt?");
+		Scanner hurtMyFeels = new Scanner (System.in);
+		String scale = hurtMyFeels.nextLine();
+		
+		String response = "";
+		if(hurtMyFeels.equals("0"))
+		{
+			response = "If you aren't hurt, why are you talking to me?";
+			
+		}
+		else if(hurtMyFeels.equals("1"))
+		{
+			response = "I think you should have a calm conversation with your partner first";
+			
+		}
+		else if(hurtMyFeels.equals("2"))
+		{
+			response = "You should confront your partner in a professional manner";
+			
+		}
+		else if(hurtMyFeels.equals("3"))
+		{
+			response = "I personally suggest giving them a good scolding";
+			
+		}
+		else if(hurtMyFeels.equals("4"))
+		{
+			response = "Confront your partner and listen to some sad songs to deal with your pain"; 
+			
+		}
+		else if(hurtMyFeels.equals("5"))
+		{
+			response = "I'd suggest you realy sort this ordeal with your partner";
+			
+		}
+		else 
+			{
+				System.out.println("It's time to look for someone new, they clearly don't deserve you if you are in this much pain");
+				String googleURL = "https://www.google.com/search";
+				String searchURL = googleURL + "?q=" + " dating websites";
+				String searchURLSFinal = searchURL.replaceAll(" ", "%20");
+				String finalURL = "Now look for someone else to be with"
+									+"I'm single btw)";
+			try {
+				Process po = Runtime.getRuntime().exec("C:\\Program Files\\Internet Explorer\\iexplore.exe " + searchURLSFinal);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return finalURL;
+			}
+			return response;
+	}
+	
 	
 	
 	/**
