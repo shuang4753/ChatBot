@@ -403,8 +403,8 @@ public class ChatBotHuang
 	}
 	
 	private String [] randomNeutralResponses = {"How long has this relationship been going?",
-			"What do you think your partner's appearences?"
-			+ "What do you think your partner's appearences?",	};
+			"What do you think your partner's appearences?",
+			 "What do you think your partner's appearences?",	};
 	private String [] randomAngryResponses = {"I am afraid you are something special.",
 			"I am afraid you are something special.",
 			"I recommend talking to me some more",
