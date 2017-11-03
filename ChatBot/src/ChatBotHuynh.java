@@ -105,6 +105,7 @@ public class ChatBotHuynh
 		
 		return response;
 	}
+	//asks user how hurt they are and gives them advice based on number
 	public static String hurtMeter(String hurtScale)
 	{
 		
@@ -143,6 +144,7 @@ public class ChatBotHuynh
 			response = "I'd suggest you realy sort this ordeal with your partner";
 			
 		}
+		//always toes to the last else statement no matter what input?
 		else 
 			{
 				System.out.println("It's time to look for someone new, they clearly don't deserve you if you are in this much pain");
@@ -160,7 +162,7 @@ public class ChatBotHuynh
 			
 			return finalURL;
 			}
-			return response;
+		return response;
 	}
 	
 	
