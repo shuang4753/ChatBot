@@ -32,8 +32,7 @@ public class ChatBotSze
 		
 		if (statement.length() == 0)
 		{
-			response = "That's it, keep your anger bottled up.";
-			emotion--;
+			response = "You know I am a chatbot." +"\nThe whole point of this is to chat";
 		}
 		else if(findKeyword(statement, "ok") >=0)
 		{
@@ -41,12 +40,12 @@ public class ChatBotSze
 		}
 		else if (findKeyword(statement, "cheated") >= 0)
 		{
-			response = "That's a shame. Have you thought about getting revenge?";
+			response = "Do you want revenge on them?";
                 	emotion--;
 		}
 		else if( findKeyword(statement, "kill myself")>=0)
 		{
-			response = "Suicide is the easy way out. At least get some revenge before you do it.";
+			response = "Suicide is the easy way out. At least get some revenge before you attempt it. Who knows, maybe you won't want to kill your self afterwards.";
 			emotion--;
 		}
 		else if (findKeyword(statement, "great") >= 0)
@@ -85,22 +84,57 @@ public class ChatBotSze
 		return response;
 	}
 	// fight/argument response
-	public String respondTo(String statement)
+	public String respondTofights(String statement)
 	{
 		String response = "";
 		
-		if(findKeyword(statement, "No we haven't had a fight") >=0)
+		if(findKeyword(statement, "no fights") >=0)
 		{
-			response = "Have they done anything to annoy you?";
+			response = "Nothing at all?";
 		}
 		
-		else if (findKeyword(statement, "Yes we had a fight recently") >=0)
+		else if (findKeyword(statement, "yes fight") >=0)
 		{
-			response = "What did you fight about?";
+			response = "What were you fighting about??";
+		}
+		else if(findKeyword(statement, "nothing")>=0)
+		{
+			response = "Hmmmm";
+			emotion++;
 		}
 		return response;
 	}
-	
+	public String discoverRevenge(String statement)
+	{
+		String response = "";
+		if(findKeyword(statement, "revenge") >=0);
+		{
+			response = "So you want revenge? Tell me what they did to you.";
+			emotion--;
+		}
+		return response;
+	}
+	public String intiateRevenge(String statement)
+	{
+		String response = "";
+		if(findKeyword(statement, "cheated with on me with my friend") >=0);
+		{
+			response = "Have you told your friend? they might join in on this as well.";
+			emotion--;
+		}
+		return response;
+	}
+	public String sassBot(String statement)
+	{
+		String response = "";
+		if (findKeyword(statement, "bad advice") >=0)
+		{
+			response = "Now who would've thought that I gave bad advice?" + 
+		"\nMaybe because the menu tipped you off and said I was the guy who gives bad advice??" + 
+		"\nWhat a snitch";
+		}
+		return response;
+	}
 	/**
 	 * Take a statement with "I want to <something>." and transform it into 
 	 * "Why do you want to <something>?"
@@ -142,7 +176,7 @@ public class ChatBotSze
 		}
 		int psn = findKeyword (statement, "I want", 0);
 		String restOfStatement = statement.substring(psn + 6).trim();
-		return "Will that make you happier if you " + restOfStatement + "?";
+		return "Will that make you happier if" + restOfStatement + "?";
 	}
 	
 	
@@ -280,7 +314,13 @@ public class ChatBotSze
 			"What happend the last time you saw each other?",
 			"I'm sorry, could you say that again?"
 	};
-	private String [] randomAngryResponses = {"Why not just dump them?", "You should release revealing picture of them they sent you to the internet.", "You should smash the windows of their car. That'll prove a point"};
-	private String [] randomHappyResponses = {"Thats nice I guess", "So you're in a happy realtionship.", "Why are you even speaking to me?"};
+	private String [] randomAngryResponses = {
+			"Why not just dump them?", 
+			"You should release revealing picture of them they sent you to the internet.", 
+			"You should smash the windows of their car. That'll prove a point.", 
+			"Do whatever you can to get back at them.",
+			"Throw some pie at them.",
+			"Expose them on the internet and let the internet do the rest."};
+	private String [] randomHappyResponses = {"If you really love them, you should let them go", "Don't let them get away.", "You know it's very likely that you two will break up statisticallly anyway.", "If you really think they're the one, put a ring on it."};
 	
 }
