@@ -144,7 +144,7 @@ public class ChatBotHuynh
 			response = "I'd suggest you realy sort this ordeal with your partner";
 			
 		}
-		//always toes to the last else statement no matter what input?
+		//always oes to the last else statement no matter what input?
 		else 
 			{
 				System.out.println("It's time to look for someone new, they clearly don't deserve you if you are in this much pain");
@@ -327,26 +327,7 @@ public class ChatBotHuynh
 	private String [] randomQuote = {"there are plenty of fish in the sea",
 			"Cheating on a good person is like throwing away a diamond and picking up a rock"
 	};
-
-	private String googleSearch(String statement) {
-		{
-			String googleURL = "https://www.google.com/search";
-			String searchURL = googleURL + "?q=" + " dating websites";
-			String searchURLSFinal = searchURL.replaceAll(" ", "%20");
-			String finalURL = "Now look for someone else to be with"
-				+"I'm single btw)";
-			
-		try {
-			Process po = Runtime.getRuntime().exec("C:\\Program Files\\Internet Explorer\\iexplore.exe " + searchURLSFinal);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return finalURL;
-		}
-	}
-		
+	
 	
 	/**
 	 * Pick a default response to use if nothing else fits.
