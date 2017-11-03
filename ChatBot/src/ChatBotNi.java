@@ -176,8 +176,10 @@ public class ChatBotNi {
 		//base string to record interests
 		private String capInterested;
 		
+		//Checks if yes was used already
 		private String yesChecker;
 		
+		//Method to include yesChecker
 		private String giftCheck(String statement) {
 		yesChecker = "true";
 			return "This is a great start " + newName + "! Lets start with a few questions about your relationship. " + 
@@ -186,7 +188,6 @@ public class ChatBotNi {
 		}
 		
 		// Method used to pull the targeted word out of the statement.
-		// Extra steps taken if given a response of regarding to "me".
 		private String interestedIn(String statement) {
 		String [] list = statement.split(" ");
 		String interest = list[list.length - 1];
@@ -197,7 +198,8 @@ public class ChatBotNi {
 	}
 		
 		// Automatically opens browser and searches a topic. 
-		
+		// Uses google formatting of search and Runtime method to execute files on the desktop
+		// searchURLSFinal is the formatted google link.
 		private String googleSearch(String statement) {
 			String googleURL = "https://www.google.com/search";
 			String searchURL = googleURL + "?q=" + capInterested + " gifts for your significant other";
