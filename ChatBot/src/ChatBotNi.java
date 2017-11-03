@@ -1,7 +1,7 @@
-import java.util.Random;
+import java.util.Random ;
+import java.util.Scanner;
 import java.net.URL;
 import java.net.URLConnection;
-import java.lang.reflect.*;
 import java.io.*;
 /**
  * A program to carry on conversations with a human user. This version:
@@ -11,18 +11,30 @@ import java.io.*;
  */
 public class ChatBotNi {
 
-	// emotion can alter the way our bot responds. Emotion can become more negative
+	// friendliness can alter the way our bot responds. Emotion can become more negative
 	// or positive over time.
 	int friendliness = 0;
+    
+	// deepnessOfLove changes some responses based on how deep in love
+	// you are with your significant other.
 	int deepnessOfLove = 0;
 	/**
 	 * Get a default greeting
 	 * 
 	 * @return a greeting
 	 */
+	private String newName;
+	
 	public String getGreeting() {
 		
-		return "Hello, how can I assist you?";
+		System.out.println("Hi! This is [Gift Advice Bot 3000]!" 
+				+ "\nLet us start with your name! What is your name?");
+		Scanner name = new Scanner (System.in);
+		newName = name.nextLine();
+		String textLine = "Hi " + newName + "! How may I help"
+				+ "\nyou today? [Remember this is a gift suggestions chatbot!]";
+		return textLine;
+			
 	}
 
 	/**
@@ -35,18 +47,21 @@ public class ChatBotNi {
 	public String getResponse(String statement) {
 		String response = "";
 		
+		// After your friendliness with the chatbot drops below -5 you will no longer get a response. 
 		if (friendliness <= -5) {
-			return "Leave me alone, I don't want to talk to you.";
+			return "Leave me alone" + newName + ", I don't want to talk to you.";
 		
+			// Easter Egg
 		} else if ((friendliness >= 10) && (findKeyword(statement, "you're cute", 0) >= 0)) {
 			response = "You're the cutest thing I've seen! You forget about your gift I'll be a better partner!";
 		
+			// Response to a empty response.
 		} else if (statement.length() == 0) {
 			response = "It's okay to talk to me.";
 		}
-
+		
 		else if (findKeyword(statement, "no") >= 0) {
-			response = "I highly doubt that. Think beyond the obvious!";
+			response =  newName + "! You're not trying hard enough! Think beyond the obvious!";
 			friendliness--;
 			deepnessOfLove--;
 		}
@@ -58,21 +73,19 @@ public class ChatBotNi {
 		}
 
 		else if (findKeyword(statement, "nice") >= 0) {
-			response = "Awww...you're so kind.";
+			response = "Awww" + newName + ", you're so kind.";
 			friendliness++;
-		}
-		
-		else if (findKeyword(statement, "yes") >= 0) {
-			response = "Great! Lets start with a few questions about your relationship. How long have you two been together?";
-			friendliness++;
-			deepnessOfLove++;
 		}
 		
 		else if (findKeyword(statement, "years") >= 0) {
 			response = "Wow that's a long time! Does she have any interests?";
 			friendliness++;
 			deepnessOfLove++;
-		}
+			} else if (findKeyword(statement, "year") >= 0) {
+				response = "Wow that's a long time! Does she have any interests?";
+				friendliness++;
+				deepnessOfLove++;
+			}
 		
 		else if ((statement.equals("I love her") || statement.equals("I love him"))) {
 			response = "That's adorable!";
@@ -99,6 +112,7 @@ public class ChatBotNi {
 							response = interestedIn(statement);
 								friendliness++;
 								deepnessOfLove++;
+
 		}					
 		
 		else if (findKeyword(statement, "Ok") >= 0) {
@@ -106,16 +120,21 @@ public class ChatBotNi {
 		}	
 		
 		// Response transforming I want to statement
+		
 		else if (findKeyword(statement, "I want to", 0) >= 0) {
 			response = transformIWantToStatement(statement);
 			
 		} else if (findKeyword(statement, "I want", 0) >= 0) {
 			response = transformIWantStatement(statement);
 			
-		} else if (findKeyword(statement, "gift", 0) >= 0) {
+		} else if ((findKeyword(statement, "gift", 0) >= 0) && (deepnessOfLove >= 10)) {
+			response = "You guys are close enough to be married! "
+					+ "\nThere no better gift than a surprise proposal!"; 
+			} else if ((findKeyword(statement, "gift", 0) >= 0) && (deepnessOfLove < 10)) {
 			response = "Do you perhaps need help picking out a gift for your significant other?";
 				deepnessOfLove++;
-			} else if (findKeyword(statement, "gifts", 0) >= 0) {
+		
+		} else if (findKeyword(statement, "gifts", 0) >= 0) {
 				response = "Do you perhaps need help picking out a gift for your significant other?";
 					deepnessOfLove++;
 				} else if (findKeyword(statement, "present", 0) >= 0) {
@@ -133,8 +152,22 @@ public class ChatBotNi {
 								} else if (findKeyword(statement, "send", 0) >= 0) {
 									response = "Do you perhaps need help picking out a gift for your significant other?";
 										deepnessOfLove++;
-					
+		
+		
+			} else if ((findKeyword(statement, "yes", 0) >= 0) && (yesChecker == "true")) {
+			response = "That's awesome! If you need anymore more help with gifts try entering something else she likes! "
+					+ "\nOr you can try to find all my hidden features!";
+			
+			} else if (findKeyword(statement, "yes", 0) >= 0) {
+				response = giftCheck(statement);
+
+			} else if (findKeyword(statement, "no", 0) >= 0) {
+				response = "Think harder!";
+				--friendliness;
+				--deepnessOfLove;
+				
 		} else {
+			
 			response = getRandomResponse();
 		}
 
@@ -142,36 +175,36 @@ public class ChatBotNi {
 	}
 		//base string to record interests
 		private String capInterested;
+		
+		private String yesChecker;
+		
+		private String giftCheck(String statement) {
+		yesChecker = "true";
+			return "This is a great start " + newName + "! Lets start with a few questions about your relationship. " + 
+				"\nHow many years have you two been together?";
 	
-	//private String giftSearch() {
-		//String googleHelp = 
-		//String search = (interest.length  - 1); }
-	
+		}
+		
+		// Method used to pull the targeted word out of the statement.
+		// Extra steps taken if given a response of regarding to "me".
 		private String interestedIn(String statement) {
 		String [] list = statement.split(" ");
 		String interest = list[list.length - 1];
 		capInterested = interest.substring(0,1).toUpperCase() + interest.substring(1);
 		String newStatement = "Wow!" + " " + capInterested + "?" + " " + "That's amazing! Now lets find a gift! [Type 'Ok' to continue]";
-		String capMeStatement = statement.substring(0,1).toUpperCase() + statement.substring(1);
-		String meStatement = "Wow!" + " " + capMeStatement + "?" + " " + "That's amazing! Now lets find a gift! [Type 'Ok' to continue]";
-		String semifinalMe = meStatement.replaceAll("me", "you");
-		String finalMePrime = semifinalMe.replaceAll("My", "Your");
-		String finalMe = finalMePrime.replaceAll("my", "your");
-		int me = statement.indexOf("me");
-		if(me == -1) {
 			return newStatement;
-		} else {
-			return finalMe;
-		}
+		
 	}
+		
+		// Automatically opens browser and searches a topic. 
 		
 		private String googleSearch(String statement) {
 			String googleURL = "https://www.google.com/search";
 			String searchURL = googleURL + "?q=" + capInterested + " gifts for your significant other";
 			String searchURLSFinal = searchURL.replaceAll(" ", "%20");
 			String finalURL = "Great! Lets find your cutie pie a gift!"
-					+" Personally, I always recommend the first website as a recommendation!"
-					+" If you need anything else just tell me :D!";
+					+" \nPersonally, I always recommend the first website as a recommendation!"
+					+" \nAnyways, do you like my reccomendation?";
 			try {
 				Process po = Runtime.getRuntime().exec("C:\\Program Files\\Internet Explorer\\iexplore.exe " + searchURLSFinal);
 			} catch (IOException e) {
@@ -340,7 +373,7 @@ public class ChatBotNi {
 			{ "Tell me about it.", "Don't know what to think about that.",
 			"That's interesting!", "That's intriguing!", "Lets not talk about that. It's confusing.",
 			"Sorry I don't know how to respond to something like that." };
-	private String[] randomAngryResponses = { "You're really annoying you know.", "What do you want now?", "Your personality disgustes me." };
-	private String[] randomHappyResponses = { "You're so cute!!", "You should talk to me more often." };
+	private String[] randomAngryResponses = { "You're really annoying you know.", "What do you want now?", newName + ", you're disgusting!" };
+	private String[] randomHappyResponses = {  newName + ", you're so cute!!", "You should talk to me more often." };
 
 }
