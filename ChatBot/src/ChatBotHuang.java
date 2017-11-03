@@ -14,7 +14,7 @@ public class ChatBotHuang
 	public String name;
 	//as user's emotion goes down, bot becomes more negative as well.
 	int emotion = 0;
-	
+	//store how long user's relationship is
 	public String years;
 	
 	public String getGreeting()
@@ -56,12 +56,6 @@ public class ChatBotHuang
 					+ "\nIf he/she becomes sad or angry :( Then stop!"
 					+ "\nDo you understand?" ;	}
 		
-		else if (findKeyword(statement, "I understand") >=0 || findKeyword(statement, "I get it") >=0 || (findKeyword(statement, "I see") >= 0) || (findKeyword(statement, "I think so") >= 0)
-				|| (findKeyword(statement, "I do") >= 0) || (findKeyword(statement, "I do understand") >= 0) ) 
-		{
-			response = transformGoodJobStatement(statement) + "" +getRandomResponse();
-			emotion++; }
-
 		else if (findKeyword(statement, "years") >= 0)
 				{ 
 			Scanner in = new Scanner  (System.in);
@@ -79,7 +73,7 @@ public class ChatBotHuang
 			response = "I hope you're not cheating with that " + years + " long relationship.";
 			emotion--; }
 		
-		// Response transforming I want to statement
+		// All my transforming statements
 		else if (findKeyword(statement, "I don't want to talk to you") >= 0)
 		{
 			response = transformRecoveryStatement(statement);
@@ -93,13 +87,24 @@ public class ChatBotHuang
 		else if (findKeyword(statement, "What do I do", 0) >= 0)
 		{
 			response = transformWhatDoIDoStatement(statement); }
-                	
-		
-                	
+        // if user finally gets something, the bot will respond with good job and another prompt
+		else if (findKeyword(statement, "I understand") >=0 || findKeyword(statement, "I get it") >=0 || (findKeyword(statement, "I see") >= 0) || (findKeyword(statement, "I think so") >= 0)
+				|| (findKeyword(statement, "I do") >= 0) || (findKeyword(statement, "I do understand") >= 0) ) 
+		{
+			response = transformGoodJobStatement(statement) + "" +getRandomResponse();
+			emotion++; }
+		// transform statements that reflect upon the user based on qualities the user types in
 		else if (findKeyword(statement, "is really",0) >= 0 || findKeyword(statement, "is very",0) >= 0 || findKeyword(statement, "I think my partner",0) >= 0)  
 		{
 			response = transformIThinkMyPartnerStatement(statement); }
-                	
+		// similar to IThinkMyPartnerStatement, but accounted for the indicies of she and he
+		else if (findKeyword(statement, "she is",0) >= 0)
+		{
+			response = transformSheIsStatement(statement); }
+		else if (findKeyword(statement, "he is",0) >= 0)
+		{
+			response = transformHeIsStatement(statement); }
+		
 		else if (findKeyword(statement, "grateful",0) >= 0)
 		{
 			response = transformGratefulGestureStatement(statement); }
@@ -107,12 +112,7 @@ public class ChatBotHuang
 		else if (findKeyword(statement, "talk about",0) >= 0)
 		{
 			response = transformTalkAboutStatement(statement); }
-		else if (findKeyword(statement, "she is",0) >= 0)
-		{
-			response = transformSheIsStatement(statement); }
-		else if (findKeyword(statement, "he is",0) >= 0)
-		{
-			response = transformHeIsStatement(statement); }
+		
                 	
 		else
 		{
@@ -121,7 +121,11 @@ public class ChatBotHuang
 		return response;
 	}
 	
-
+/**
+ * If user asks "What do I do" bot responds with asking another friend
+ * @param statement
+ * @return "I recommend asking your second best friend for his/her advice."
+ */
 	private String transformWhatDoIDoStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -136,6 +140,11 @@ public class ChatBotHuang
 
 		return "I recommend asking your second best friend for his/her advice.";
 	}
+/**
+ * If User suggests talking about <something>
+ * @param statement
+ * @return "My advice on <something? is be in the other person's shoes for a moment and just think what he/she is thinking."
+ */
 	private String transformTalkAboutStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -152,7 +161,11 @@ public class ChatBotHuang
 		return "My advice on " + restOfStatement +" is be in the other person's shoes for a moment and just think what he/she is thinking."
 				+ "\nThat's called sympathy. Do you understand?"  ;
 	}
-
+/**
+ * If User comments on a quality of girl
+ * @param statement
+ * @return "If she is  <something> it is likely you are also <something>"
+ */
 	private String transformSheIsStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -168,7 +181,11 @@ public class ChatBotHuang
 		String restOfStatement = statement.substring(psn+6).trim();
 		return "If she is " + restOfStatement + " it is likely you are also " + restOfStatement;
 	}
-	
+/**
+ * If User comments on a quality of a guy
+ * @param statement
+ * @return "If he is  <something> it is likely you are also <something>"
+ */
 	private String transformHeIsStatement(String statement)
 	{
 		//  Remove the final period, if there is one
@@ -184,7 +201,12 @@ public class ChatBotHuang
 		String restOfStatement = statement.substring(psn+5).trim();
 		return "If he is " + restOfStatement + "it is likely you are also" + restOfStatement;
 	}
-	
+	/**
+	 * If User comments on a quality in the form of "I think my partner is"
+	 * @param statement
+	 * @return "If your partner is  <something> it is likely you are also <something>"
+	 */
+
 	private String transformIThinkMyPartnerStatement(String statement)
 	{
 		//  Remove the final period, if there is one
