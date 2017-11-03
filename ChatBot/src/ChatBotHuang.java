@@ -63,7 +63,7 @@ public class ChatBotHuang
 			emotion++; }
 
 		else if (findKeyword(statement, "years") >= 0)
-				{ int 
+				{ 
 			Scanner in = new Scanner  (System.in);
 			years = in.nextLine();
 			response = "Wow that is a long time!" + getRandomResponse();
@@ -360,7 +360,7 @@ public class ChatBotHuang
 		return findKeyword (statement, goal, 0);
 	}
 	
-//
+
 
 	/**
 	 * Pick a default response to use if nothing else fits.
